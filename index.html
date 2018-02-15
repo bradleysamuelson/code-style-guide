@@ -1,0 +1,209 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Code Style Guide</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,400i,600,600i" rel="stylesheet">
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#intro">Intro and Philosophy</a></li>
+                    <li><a href="#file-structure">File Structure</a></li>
+                    <li><a href="#reset">Reset</a></li>
+                    <li><a href="#general">General Rules</a></li>
+                    <li><a href="#formatting">Formatting</a></li>
+                    <li><a href="#file-rule-order">File and Rule Order</a></li>
+                    <li><a href="#variables">Variables</a></li>
+                    <li><a href="#nesting">Nesting</a></li>
+                    <li><a href="#media-queries">Media Queries</a></li>
+                    <li><a href="#naming">Naming and Separation of Concerns</a></li>
+                    <li><a href="#linting">Linting</a></li>
+
+                </ul>
+            </nav>
+            <div class="content">
+                <h1>Coding Style Guide for CSS</h1>
+                <section id="intro">
+                    <h2>Intro and Philosophy</h2>
+                    <p>Nobody wants to write ugly code that's difficult to maintain. Those of us who have been building web sites and applications for awhile have all felt the pain of stepping into a project where, for whatever reason, the format and structure was all over the place. I've been a designer and front-end developer for over 15 years, currently a UX Engineer at Oath, and this guide is mostly for my own sanity to try to start new projects off on the right foot. The main focus is to write clean, simple code that's easy for another human to pick up and maintain at any point. 
+                    </p>
+                </section>
+                <section id="file-structure">
+                    <h2>File Structure</h2>
+                    <p>If at all possible (and it's always possible), use a CSS preprocessor (preferably SASS). A partial file should be created for each screen/component/whatever makes the most sense. A main file should be used to import the partials, which will give you greater control of the cascade. The main file should contain nothing but imports.</p>
+                </section>
+                <section id="reset">
+                    <h2>Reset</h2>
+                    <p>Browsers are different. Use a reset to normalize them. I recommend <strong>Normalize:</strong><br>
+                    <a href="https://necolas.github.io/normalize.css/" target="_blank">https://necolas.github.io/normalize.css/</a></p>
+                </section>
+                <section id="general">
+                    <h2>General Rules (for readability and to avoid common issues)</h2>
+                    <ul>
+                        <li>Don't use IDs in selectors (ex: <code>#element</code>)</li>
+                        <li>Don't use HTML tags in selectors (ex: <code>div.element</code>)
+                            <ul>
+                                <li>Also avoid adding styles directly to tags (<code>div</code>) unless they're for reset purposes.</li>
+                            </ul>
+                        </li>
+                        <li>Avoid nesting for nesting's sake. Only use nesting when increased specificity is needed.
+                            <ul>
+                                <li>Pseudo selectors should be nested. Otherwise, only if it makes sense.</li>
+                                <li>If you are intentionally nesting for specificity, don't go deeper than 3 levels (preferably fewer).</li>
+                            </ul>
+                        </li>
+                        <li>Don't use <code>!important</code> - there may be rare occasions where it's necessary (overriding bad third-party code comes to mind) but there's almost always a better option.
+                            <ul>
+                                <li>Remember: If everything is <code>!important</code>, nothing will be.</li>
+                            </ul>
+                        </li>
+                        <li>Keep things simple.
+                            <ul>
+                                <li>In general, don't go for overly complicated tricks and hacks. The simpler and easier to understand your code is, the easier it will be to maintain.</li>
+                            </ul>
+                        </li>
+                        <li>Dont' use <code>margin-top</code>.
+                            <ul>
+                                <li>To avoid undesired outcomes of collapsing margins, instead use padding-top or margin-bottom on the preceding element.</li>
+                            </ul>
+                        </li>
+                        <li>Use shorthand properties sparingly and only if you are declaring all values.</li>
+                    </ul>
+                </section>
+                <section id="formatting">
+                    <h2>Formatting</h2>
+                    <ul>
+                        <li>Use 2 spaces for indentation.</li>
+                        <li>Always put a space after the colon in declarations.</li>
+                        <li>Always put a space before the <code>{</code>.</li>
+                        <li>Always put the closing <code>}</code> on a new line with a line break after.</li>
+                        <li>When grouping selectors, keep them all on a single line (unless there are too many and it becomes difficult to read).</li>
+                        <li>Only write one property per line.</li>
+                        <li>Selectors should be lowercase and hyphen-separated.</li>
+                        <li>Use the preprocessor's double slash (<code>//</code>) for commenting.</li>
+                        <li>Don't include a unit for <code>0</code> values.</li>
+                        <li>Use a leading <code>0</code> for decimal values (ex: <code>0.25</code>).</li>
+                        <li>Hex values should be lowercase.</li>
+                    </ul>
+                </section>
+                <section id="file-rule-order">
+                    <h2>File and Rule Order</h2>
+                    <p>The content of a file should follow the following structure as closely as possible:</p>
+                    <ol>
+                        <li>Imports</li>
+                        <li>Variables (overrides of global variables or used only in this file)</li>
+                        <li>Mixins (that only apply to this file)</li>
+                        <li>Helper styles</li>
+                        <li>Base styles</li>
+                        <li>Layout styles</li>
+                    </ol>
+                    <p>Properties should adhere as closely as possible to the following structure:</p>
+                    <ol>
+                        <li>Rule extensions</li>
+                        <li>Layout or box-model properties
+                            <ul>
+                                <li>Margin, padding, position, display, width, height, etc</li>
+                            </ul>
+                        </li>
+                        <li>Typography
+                            <ul>
+                                <li>Font, line-height, text-decoration, etc</li>
+                            </ul>
+                        </li>
+                        <li>Stylistic properties
+                            <ul>
+                                <li>Color, background, border, animation, etc</li>
+                            </ul>
+                        </li>
+                        <li>Interaction properties
+                            <ul>
+                                <li>Appearance, cursor, pointer-events, etc</li>
+                            </ul>
+                        </li>
+                        <li>Pseudo-selectors
+                            <ul>
+                                <li><code>:hover</code>, <code>:focus</code>, <code>:active</code>, etc</li>
+                            </ul>
+                        </li>
+                        <li>Pseudo-elements
+                            <ul>
+                                <li><code>::before</code>, <code>::after</code>, <code>::selection</code>, etc</li>
+                            </ul>
+                        </li>
+                        <li>Modifier classes</li>
+                        <li>Nested elements</li>
+                    </ol>
+                </section>
+                <section id="variables">
+                    <h2>Variables</h2>
+                    <ul>
+                        <li>Global variables should live in a separate 'variables' file.</li>
+                        <li>Local variables should be defined at the top of the file.</li>
+                        <li>Always use a variable to define colors.</li>
+                    </ul>
+                </section>
+                <section id="nesting">
+                    <h2>Nesting</h2>
+                    <ul>
+                        <li>In general, try to keep the cascade as flat as possible - avoid nesting more than 3 levels deep.</li>
+                        <li>Nesting should be more of a convenience to modify the parent selector rather than targeting for specificity.</li>
+                    </ul>
+                </section>
+                <section id="media-queries">
+                    <h2>Media Queries</h2>
+                    <ul>
+                        <li>Media queries should be used within the selector. The idea is to keep relevant styles together rather than create a separate section or file to contain media queries (which often can lead to cascading issues).</li>
+                    </ul>
+                    <p>
+                        <code class="code__block">
+                            .selector {<br>
+                            &nbsp;&nbsp;float: left;<br>
+                            <br>
+                            &nbsp;&nbsp;@media only screen and (max-width: 767px) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;float: none;<br>
+                                &nbsp;&nbsp;}<br>
+                            }
+                        </code>
+                    </p>
+                    <ul>
+                        <li>Create global variables for frequently used breakpoints.</li>
+                    </ul>
+                    <p>
+                        <code class="code__block">
+                            $screen_sm_max: 767px;<br>
+                            <br>
+                            .selector {<br>
+                                &nbsp;&nbsp;float: left;<br>
+                                <br>
+                                &nbsp;&nbsp;@media only screen and (max-width: $screen_sm_max) {<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;float: none;<br>
+                                    &nbsp;&nbsp;}<br>
+                                }
+                        </code>
+                </section>
+                <section id="naming">
+                    <h2>Naming and Separation of Concerns</h2>
+                    <p>In code (as in life) I try to stay out of the over-opinionated arguments about which philosophy is better. Blanket statements about the value of completely semantic vs BEM or functional CSS aren't helpful. Instead, my opinion is that the circumstances of the project will dictate the conventions that should be used. My only rule of thumb is to never go too far with functional CSS to the point where you're almost writing inline styles. At some point it starts to feel icky and you'll know it when you see it.</p>
+                </section>
+                <section id="linting">
+                    <h2>Linting</h2>
+                    <p>To help enforce the rules, I recommend <a href="https://stylelint.io/" target="_blank">https://stylelint.io/</a><br>
+                    Here's a <a href="">config file</a> I use with <a href="https://code.visualstudio.com/" target="_blank">VS Code</a></p>
+                </section>
+            
+
+            </div>
+        </div>
+    </body>
+</html>
