@@ -2,3 +2,4 @@
 
 #editors
 .vscode/
+.sass-cache
