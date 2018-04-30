@@ -56,7 +56,8 @@ nav {
   margin-left: 320px; }
   @media only screen and (max-width: 1024px) {
     .content {
-      margin-left: 0; } }
+      margin-left: 0;
+      padding: 50px 30px; } }
 
 h1 {
   font-size: 30px; }
